@@ -52,6 +52,8 @@ public class AsignarActivity extends AppCompatActivity {
         EditText inputText2 = binding.editTextTextPersonName3; //Empleado
         Button button = findViewById(R.id.button6);
 
+        createNotificationChannel();
+
         if (inputText1.getText().toString().isEmpty() || inputText2.getText().toString().isEmpty()) {
             button.setEnabled(false);
         }
@@ -87,10 +89,10 @@ public class AsignarActivity extends AppCompatActivity {
                                                 if(employee.getManagerId() == Integer.parseInt(inputText1.getText().toString())){
                                                     if(employee.getMeeting() == 1){
                                                         //Notificacion: El trabajador ya tiene una cita asignada. Elija otro trabajador
-                                                        Toast.makeText(getApplicationContext(),"El trabajador ya tiene una cita asignada. Elija otro trabajador", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(getApplicationContext(), AsignarActivity.class);
-                                                        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-                                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channel4Id)
+                                                        Toast.makeText(AsignarActivity.this,"El trabajador ya tiene una cita asignada. Elija otro trabajador", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(AsignarActivity.this, AsignarActivity.class);
+                                                        PendingIntent pendingIntent = PendingIntent.getActivity(AsignarActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(AsignarActivity.this, channel4Id)
                                                                 .setSmallIcon(R.drawable.baseline_auto_stories_24)
                                                                 .setContentTitle("Asignar Tutoría")
                                                                 .setContentText("El trabajador ya tiene una cita asignada. Elija otro trabajador")
@@ -99,9 +101,9 @@ public class AsignarActivity extends AppCompatActivity {
                                                                 .setAutoCancel(true);
                                                         Notification notification = builder.build();
 
-                                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(AsignarActivity.this);
 
-                                                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                                                        if (ActivityCompat.checkSelfPermission(AsignarActivity.this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                                                             notificationManager.notify(4, notification);
                                                         }
 
@@ -120,9 +122,9 @@ public class AsignarActivity extends AppCompatActivity {
                                                             }
                                                         });
                                                         Toast.makeText(getApplicationContext(),"Asignación del trabajador correcta", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(getApplicationContext(), AsignarActivity.class);
-                                                        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-                                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channel3Id)
+                                                        Intent intent = new Intent(AsignarActivity.this, AsignarActivity.class);
+                                                        PendingIntent pendingIntent = PendingIntent.getActivity(AsignarActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(AsignarActivity.this, channel3Id)
                                                                 .setSmallIcon(R.drawable.baseline_auto_stories_24)
                                                                 .setContentTitle("Asignar Tutoría")
                                                                 .setContentText("Asignación del trabajador correcta")
@@ -131,9 +133,9 @@ public class AsignarActivity extends AppCompatActivity {
                                                                 .setAutoCancel(true);
                                                         Notification notification = builder.build();
 
-                                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(AsignarActivity.this);
 
-                                                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                                                        if (ActivityCompat.checkSelfPermission(AsignarActivity.this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                                                             notificationManager.notify(3, notification);
                                                         }
                                                     }
