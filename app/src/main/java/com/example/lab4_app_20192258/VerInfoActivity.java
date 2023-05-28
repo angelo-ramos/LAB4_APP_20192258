@@ -83,8 +83,24 @@ public class VerInfoActivity extends AppCompatActivity {
                                         binding.textView19.setText(employee.getPhoneNumber());
                                         binding.textView21.setText(employee.getHireDate().toString());
                                         binding.textView22.setText(employee.getSalary().toString());
-                                        //guardarComoJson(employee,inputText.getText().toString());
-                                        //Toast.makeText(getApplicationContext(),"informacionDe"+inputText.getText().toString()+".txt"+" en Storage Interno", Toast.LENGTH_SHORT).show();
+
+                                        if(employee.getManagerId() == null){
+                                            binding.textView23.setText("No tiene");
+                                        }else{
+                                            employeeRepository.obtenerEmployee(employee.getManagerId()).enqueue(new Callback<EmployeeDTO>() {
+                                                @Override
+                                                public void onResponse(Call<EmployeeDTO> call, Response<EmployeeDTO> response) {
+                                                    if (response.isSuccessful()){
+                                                        Employee employee2 = response.body().getEmployee();
+                                                        binding.textView23.setText(employee2.getFirstName()+" "+employee2.getLastName());
+                                                    }
+                                                }
+                                                @Override
+                                                public void onFailure(Call<EmployeeDTO> call, Throwable t) {
+                                                    t.printStackTrace();
+                                                }
+                                            });
+                                        }
                                     } else {
                                         Log.d("msg-test", "error en la respuesta del webservice");
                                     }
