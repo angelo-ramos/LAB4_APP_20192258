@@ -3,9 +3,11 @@ package com.example.lab4_app_20192258;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.lab4_app_20192258.Retrofit.EmployeeRepository;
 import com.example.lab4_app_20192258.databinding.ActivityMainBinding;
@@ -48,6 +50,7 @@ public class TutorActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             List<Employee> employeeList = response.body();
                             guardarComoJson(employeeList);
+                            Toast.makeText(TutorActivity.this,"listaDeTrabajadores.txt en Storage Interno", Toast.LENGTH_SHORT).show();
                             /* for (Employee e : employeeList) { System.out.println("id: " + e.getFirstName() + " | body: " + e.getEmployeeId()); } */
                         } else {
                             Log.d("msg-test", "error en la respuesta del webservice");
@@ -58,6 +61,14 @@ public class TutorActivity extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 });
+            }
+        });
+
+        binding.button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TutorActivity.this, BuscarTrabajaActivity.class);
+                startActivity(intent);
             }
         });
     }

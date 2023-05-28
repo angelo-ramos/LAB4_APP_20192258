@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.button.setOnClickListener(view -> {
             Intent intent = new Intent(this, TutorActivity.class);
+            startActivity(intent);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel1Id)
@@ -66,39 +67,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        /*
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EmployeeRepository employeeRepository = new Retrofit.Builder()
-                        .baseUrl("http://192.168.100.108:8080")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build().create(EmployeeRepository.class);
-                Log.d("msg-test", "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                employeeRepository.listarEmployees().enqueue(new Callback<List<Employee>>() {
-                    @Override
-                    public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
-                        if (response.isSuccessful()) {
-                            List<Employee> employeeList = response.body();
-                            for (Employee e : employeeList) {
-                                System.out.println("id: " + e.getFirstName() + " | body: " + e.getEmployeeId());
-                            }
-                        } else {
-                            Log.d("msg-test", "error en la respuesta del webservice");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<List<Employee>> call, Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-            }
-        });
-        */
-
         binding.button2.setOnClickListener(view -> {
             Intent intent = new Intent(this, TrabajadorActivity.class);
+            startActivity(intent);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel2Id)

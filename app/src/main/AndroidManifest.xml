@@ -17,10 +17,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".BuscarTrabajaActivity"
+            android:parentActivityName=".TutorActivity"
+            android:exported="false" />
+        <activity
             android:name=".TutorActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".TrabajadorActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
