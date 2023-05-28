@@ -2,6 +2,7 @@ package com.example.lab4_app_20192258;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +11,11 @@ import com.example.lab4_app_20192258.Retrofit.EmployeeRepository;
 import com.example.lab4_app_20192258.databinding.ActivityMainBinding;
 import com.example.lab4_app_20192258.databinding.ActivityTutorBinding;
 import com.example.lab4_app_20192258.entity.Employee;
+import com.google.gson.Gson;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -22,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TutorActivity extends AppCompatActivity {
 
     ActivityTutorBinding binding;
+    public static String TAG = "msg-test";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +47,8 @@ public class TutorActivity extends AppCompatActivity {
                     public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
                         if (response.isSuccessful()) {
                             List<Employee> employeeList = response.body();
-                            for (Employee e : employeeList) {
-                                System.out.println("id: " + e.getFirstName() + " | body: " + e.getEmployeeId());
-                            }
+                            guardarComoJson(employeeList);
+                            /* for (Employee e : employeeList) { System.out.println("id: " + e.getFirstName() + " | body: " + e.getEmployeeId()); } */
                         } else {
                             Log.d("msg-test", "error en la respuesta del webservice");
                         }
@@ -56,4 +61,24 @@ public class TutorActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void guardarComoJson(List<Employee> listaJobs) {
+        Gson gson = new Gson();
+        String listaJobsAsJson = gson.toJson(listaJobs);
+
+        Log.d(TAG, listaJobsAsJson);
+
+        String fileName = "listaDeTrabajadores.txt";
+
+        try (FileOutputStream fileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+             FileWriter fileWriter = new FileWriter(fileOutputStream.getFD())) {
+
+            fileWriter.write(listaJobsAsJson);
+            Log.d(TAG, "Guardado exitoso");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
