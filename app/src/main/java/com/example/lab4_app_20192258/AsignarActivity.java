@@ -41,6 +41,7 @@ public class AsignarActivity extends AppCompatActivity {
     ActivityAsignarBinding binding;
     public static String TAG = "msg-test";
     String channel3Id = "canal3";
+    String channel4Id = "canal4";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +88,22 @@ public class AsignarActivity extends AppCompatActivity {
                                                     if(employee.getMeeting() == 1){
                                                         //Notificacion: El trabajador ya tiene una cita asignada. Elija otro trabajador
                                                         Toast.makeText(getApplicationContext(),"El trabajador ya tiene una cita asignada. Elija otro trabajador", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), AsignarActivity.class);
+                                                        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channel4Id)
+                                                                .setSmallIcon(R.drawable.baseline_auto_stories_24)
+                                                                .setContentTitle("Asignar Tutoría")
+                                                                .setContentText("El trabajador ya tiene una cita asignada. Elija otro trabajador")
+                                                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                                                .setContentIntent(pendingIntent)
+                                                                .setAutoCancel(true);
+                                                        Notification notification = builder.build();
+
+                                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+                                                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                                                            notificationManager.notify(4, notification);
+                                                        }
 
                                                     }else {
                                                         //Notificacion: Asignación del trabajador correcta
@@ -167,13 +184,13 @@ public class AsignarActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
 
-            /*
-            NotificationChannel channel2 = new NotificationChannel(channel2Id,
-                    "Canal 1 notificaciones",
+
+            NotificationChannel channel2 = new NotificationChannel(channel4Id,
+                    "Canal 4 notificaciones",
                     NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription("Este es para los mensajes que no llegaron a enviarse");
             notificationManager.createNotificationChannel(channel2);
-            */
+
 
             askPermission();
 
