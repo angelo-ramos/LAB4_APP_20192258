@@ -156,7 +156,4 @@ public class TrabajadorActivity extends AppCompatActivity {
                     Log.e("msg-test", "Permiso denegado");
                 }
             });
-
-
-
 }
