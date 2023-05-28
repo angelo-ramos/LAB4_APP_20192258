@@ -17,8 +17,19 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.example.lab4_app_20192258.Retrofit.EmployeeRepository;
 import com.example.lab4_app_20192258.databinding.ActivityMainBinding;
+import com.example.lab4_app_20192258.entity.Employee;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel1Id)
                     .setSmallIcon(R.drawable.baseline_auto_stories_24)
                     .setContentTitle("Modo Tutor")
-                    .setContentText("“Está entrando en modo Tutor")
+                    .setContentText("Está entrando en modo Tutor")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
@@ -55,11 +66,42 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        /*
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EmployeeRepository employeeRepository = new Retrofit.Builder()
+                        .baseUrl("http://192.168.100.108:8080")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build().create(EmployeeRepository.class);
+                Log.d("msg-test", "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                employeeRepository.listarEmployees().enqueue(new Callback<List<Employee>>() {
+                    @Override
+                    public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
+                        if (response.isSuccessful()) {
+                            List<Employee> employeeList = response.body();
+                            for (Employee e : employeeList) {
+                                System.out.println("id: " + e.getFirstName() + " | body: " + e.getEmployeeId());
+                            }
+                        } else {
+                            Log.d("msg-test", "error en la respuesta del webservice");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<List<Employee>> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
+        */
+
         binding.button2.setOnClickListener(view -> {
             Intent intent = new Intent(this, TrabajadorActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel1Id)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channel2Id)
                     .setSmallIcon(R.drawable.baseline_auto_stories_24)
                     .setContentTitle("Modo Empleado")
                     .setContentText("Está entrando en modo Empleado")
