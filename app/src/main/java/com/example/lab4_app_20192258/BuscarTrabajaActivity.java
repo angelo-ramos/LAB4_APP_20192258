@@ -78,8 +78,13 @@ public class BuscarTrabajaActivity extends AppCompatActivity {
                                 public void onResponse(Call<EmployeeDTO> call, Response<EmployeeDTO> response) {
                                     if (response.isSuccessful()) {
                                         Employee employee = response.body().getEmployee();
-                                        guardarComoJson(employee,inputText.getText().toString());
-                                        Toast.makeText(getApplicationContext(),"informacionDe"+inputText.getText().toString()+".txt"+" en Storage Interno", Toast.LENGTH_SHORT).show();
+                                        if(employee != null){
+                                            guardarComoJson(employee,inputText.getText().toString());
+                                            Toast.makeText(getApplicationContext(),"informacionDe"+inputText.getText().toString()+".txt"+" en Storage Interno", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Toast.makeText(getApplicationContext(),"El employee con ese ID no existe", Toast.LENGTH_SHORT).show();
+                                        }
+
                                     } else {
                                         Log.d("msg-test", "error en la respuesta del webservice");
                                     }
@@ -87,6 +92,7 @@ public class BuscarTrabajaActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<EmployeeDTO> call, Throwable t) {
+                                    Toast.makeText(getApplicationContext(),"Id incorrecto", Toast.LENGTH_SHORT).show();
                                     t.printStackTrace();
                                 }
                             });

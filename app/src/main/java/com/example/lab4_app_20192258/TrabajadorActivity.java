@@ -89,12 +89,18 @@ public class TrabajadorActivity extends AppCompatActivity {
                                 public void onResponse(Call<EmployeeDTO> call, Response<EmployeeDTO> response) {
                                     if (response.isSuccessful()) {
                                         Employee employee = response.body().getEmployee();
-                                        if((int)employee.getMeeting() == 1){
-                                            descargarConDownloadManager();
-                                            Toast.makeText(getApplicationContext(),"Descargando horarios", Toast.LENGTH_SHORT).show();
-                                        }else{
-                                            Toast.makeText(getApplicationContext(),"No cuenta con tutorías pendientes", Toast.LENGTH_SHORT).show();
+
+                                        if(employee != null){
+                                            if((int)employee.getMeeting() == 1){
+                                                descargarConDownloadManager();
+                                                Toast.makeText(getApplicationContext(),"Descargando horarios", Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                Toast.makeText(getApplicationContext(),"No cuenta con tutorías pendientes", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }else {
+                                            Toast.makeText(getApplicationContext(),"El employee con ese ID no existe", Toast.LENGTH_SHORT).show();
                                         }
+
                                     } else {
                                         Log.d("msg-test", "error en la respuesta del webservice");
                                     }
