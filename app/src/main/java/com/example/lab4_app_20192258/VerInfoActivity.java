@@ -67,6 +67,8 @@ public class VerInfoActivity extends AppCompatActivity {
                 }else{
                     // Si no está vacío, activar el botón
                     Button button2 = binding.button7;
+                    Button button = binding.button6;
+                    button.setEnabled(true);
                     button2.setEnabled(true);
                     button2.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -217,6 +219,35 @@ public class VerInfoActivity extends AppCompatActivity {
                                     t.printStackTrace();
                                 }
                             });
+                        }
+                    });
+
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            EmployeeRepository employeeRepository = new Retrofit.Builder()
+                                    .baseUrl("http://192.168.100.108:8080")
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build().create(EmployeeRepository.class);
+                            //Log.d("msg-test", "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+inputText.getText().toString());
+                            employeeRepository.obtenerEmployee(Integer.parseInt(inputText.getText().toString())).enqueue(new Callback<EmployeeDTO>() {
+                                @Override
+                                public void onResponse(Call<EmployeeDTO> call, Response<EmployeeDTO> response) {
+                                    if (response.isSuccessful()) {
+                                        Employee employee = response.body().getEmployee();
+                                        guardarComoJson(employee,inputText.getText().toString());
+                                        Toast.makeText(getApplicationContext(),"informacionDe"+inputText.getText().toString()+".txt"+" en Storage Interno", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Log.d("msg-test", "error en la respuesta del webservice");
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<EmployeeDTO> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+
                         }
                     });
                 }
