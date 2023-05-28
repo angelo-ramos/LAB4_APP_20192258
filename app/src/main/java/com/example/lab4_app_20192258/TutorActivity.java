@@ -71,6 +71,14 @@ public class TutorActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TutorActivity.this, AsignarActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void guardarComoJson(List<Employee> listaJobs) {
