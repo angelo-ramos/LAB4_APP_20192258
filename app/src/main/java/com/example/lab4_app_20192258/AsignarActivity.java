@@ -88,10 +88,37 @@ public class AsignarActivity extends AppCompatActivity {
                                                         //Notificacion: El trabajador ya tiene una cita asignada. Elija otro trabajador
                                                         Toast.makeText(getApplicationContext(),"El trabajador ya tiene una cita asignada. Elija otro trabajador", Toast.LENGTH_SHORT).show();
 
-
                                                     }else {
                                                         //Notificacion: Asignación del trabajador correcta
-                                                        Toast.makeText(getApplicationContext(),"Notificacion: Asignación del trabajador correcta", Toast.LENGTH_SHORT).show();
+                                                        employeeRepository.asignar(Integer.parseInt(inputText2.getText().toString())).enqueue(new Callback<Integer>() {
+                                                            @Override
+                                                            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                                                Integer body = response.body();
+                                                                Log.d(TAG,"WAAA: "+body);
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<Integer> call, Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                                        Toast.makeText(getApplicationContext(),"Asignación del trabajador correcta", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), AsignarActivity.class);
+                                                        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                                                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channel3Id)
+                                                                .setSmallIcon(R.drawable.baseline_auto_stories_24)
+                                                                .setContentTitle("Asignar Tutoría")
+                                                                .setContentText("Asignación del trabajador correcta")
+                                                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                                                .setContentIntent(pendingIntent)
+                                                                .setAutoCancel(true);
+                                                        Notification notification = builder.build();
+
+                                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+                                                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                                                            notificationManager.notify(3, notification);
+                                                        }
                                                     }
                                                 }else{
                                                     //Mensaje: No es manager del empleado

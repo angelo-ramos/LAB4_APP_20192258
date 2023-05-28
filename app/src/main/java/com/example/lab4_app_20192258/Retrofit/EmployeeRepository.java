@@ -9,7 +9,10 @@ import com.example.lab4_app_20192258.entity.JobDTO;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface EmployeeRepository {
@@ -24,4 +27,8 @@ public interface EmployeeRepository {
 
     @GET("/tutor/depa")
     Call<DepartmentsDTO> obtenerDepa(@Query("id") Integer id);
+
+    @FormUrlEncoded
+    @POST("/asignar")
+    Call<Integer> asignar(@Field("id") Integer id);
 }
